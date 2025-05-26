@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Wealth Map</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+      position: relative; /* make sure position for overlay panel */
+    }
+
+    #search-container {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 12px 16px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    #searchInput {
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      width: 240px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    #searchInput:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+    }
+
+    #searchBtn {
+      padding: 10px 16px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #searchBtn:hover {
+      background-color: #0056b3;
+    }
+
+    #searchResult {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      z-index: 999;
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    body, html {
+      margin: 0;
+      padding: 0;
+    }
+
+    /* New Owner Details Panel */
+    #ownerDetailsPanel {
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      width: 320px;
+      background: white;
+      border: 1px solid #ccc;
+      padding: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      z-index: 1100;
+      font-family: Arial, sans-serif;
+    }
+
+    #ownerDetailsPanel h3 {
+      margin-top: 0;
+    }
+
+    #ownerDetailsPanel button {
+      margin-top: 10px;
+      padding: 8px 12px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #ownerDetailsPanel button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <section class="hero" id="hero-section">
+    <video autoplay muted loop id="bg-video">
+      <source src="images/bg1.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-content">
+      <h1>💰 Wealth Map</h1>
+      <p id="greeting"></p>
+      <button id="logoutBtn" style="display: none;">Logout</button>
+      <p>One stop place to know the user details</p>
+      <div class="buttons" id="loginButtons">
+        <button id="loginBtn">Login</button>
+        <button id="signupBtn">Sign Up</button>
+      </div>
+      <div class="get-started-wrapper">
+        <button id="getStarted" style="display: none;">Get Started</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section id="map-section" class="hidden">
+    <div id="map">
+      <div id="search-container">
+        <input type="text" id="searchInput" placeholder="Search owner by name..." />
+        <button id="searchBtn">Search</button>
+      </div>
+      <div id="searchResult"></div>
+    </div>
+  </section>
+
+  <!-- Owner Details Panel -->
+  <div id="ownerDetailsPanel">
+    <h3>Owner Details</h3>
+    <div id="ownerDetailsContent"></div>
+    <canvas id="ownerPieChart" width="300" height="300" style="margin-top:10px;"></canvas>
+    <button id="closeDetails">Close</button>
+  </div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
